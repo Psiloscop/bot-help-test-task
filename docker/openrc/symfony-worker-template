@@ -1,0 +1,34 @@
+#!/sbin/openrc-run
+
+name="symfony-worker-<queue_name>"
+description="Symfony worker service"
+command="php /app/bin/console messenger:consume"
+command_args="--all --queues=bot_help.account_event_process.command.<queue_name> --time-limit=3600"
+pidfile="/var/run/symfony-worker-<queue_name>.pid"
+logfile="/var/log/symfony-worker-<queue_name>.log"
+errorfile="/var/log/symfony-worker-error-<queue_name>.log"
+
+depend() {
+    need net
+}
+
+start() {
+    ebegin "Starting ${name}"
+    start-stop-daemon --start --quiet --background --pidfile ${pidfile} --make-pidfile \
+        --exec ${command} -- ${command_args} >> ${logfile} 2>> ${errorfile}
+    eend $?
+
+    return 0
+}
+
+stop() {
+    ebegin "Stopping ${name}"
+    start-stop-daemon --stop --pidfile ${pidfile}
+    eend $?
+}
+
+restart() {
+    stop
+    sleep 1
+    start
+}

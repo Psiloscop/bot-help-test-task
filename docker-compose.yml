@@ -1,0 +1,28 @@
+services:
+    symfony_app:
+        build:
+            context: .
+        ports:
+            - 3910:3910
+        volumes:
+            - .:/app:rw
+        environment:
+            - APP_ENV=dev
+            - 'MESSENGER_WORKER_COUNT=${MESSENGER_WORKER_COUNT}'
+        networks:
+            - bot-help
+        hostname: symfony-app
+    rabbitmq:
+        image: rabbitmq:3-management-alpine
+        restart: on-failure
+        ports:
+            - 3912:5672
+            - 3913:15672
+        volumes:
+            - ./rabbitmq/data/:/var/lib/rabbitmq
+            - ./rabbitmq/log/:/var/log/rabbitmq
+        networks:
+            - bot-help
+networks:
+    bot-help:
+        driver: bridge

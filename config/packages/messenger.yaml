@@ -1,0 +1,44 @@
+framework:
+    messenger:
+        # Uncomment this (and the failed transport below) to send failed messages to this transport for later handling.
+        # failure_transport: failed
+
+        transports:
+            # https://symfony.com/doc/current/messenger.html#transport-configuration
+            # async: '%env(MESSENGER_TRANSPORT_DSN)%'
+            # failed: 'doctrine://default?queue_name=failed'
+            # sync: 'sync://'
+            async_process_account_event:
+                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                options:
+                    exchange:
+                        name: bot_help.account_event_process.command
+                        type: direct
+                    queues:
+                        bot_help.account_event_process.command.queue0:
+                            binding_keys: [ 'queue0' ]
+                        bot_help.account_event_process.command.queue1:
+                            binding_keys: [ 'queue1' ]
+                        bot_help.account_event_process.command.queue2:
+                            binding_keys: [ 'queue2' ]
+                        bot_help.account_event_process.command.queue3:
+                            binding_keys: [ 'queue3' ]
+                        bot_help.account_event_process.command.queue4:
+                            binding_keys: [ 'queue4' ]
+                        bot_help.account_event_process.command.queue5:
+                            binding_keys: [ 'queue5' ]
+                        bot_help.account_event_process.command.queue6:
+                            binding_keys: [ 'queue6' ]
+
+        routing:
+            # Route your messages to the transports
+            # 'App\Message\YourMessage': async
+             'App\Message\Command\AccountEventProcessCommand': async_process_account_event
+
+# when@test:
+#    framework:
+#        messenger:
+#            transports:
+#                # replace with your transport name here (e.g., my_transport: 'in-memory://')
+#                # For more Messenger testing tools, see https://github.com/zenstruck/messenger-test
+#                async: 'in-memory://'
