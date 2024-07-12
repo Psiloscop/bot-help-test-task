@@ -11,7 +11,7 @@ use App\Service\AccountEventProcessDispatcher;
 
 class ApiController extends AbstractController
 {
-    #[Route('/api', name: 'app_api')]
+    #[Route('/api', name: 'app_api', methods: ['POST'])]
     public function index(
         Request $request,
         AccountEventProcessDispatcher $accountEventProcessDispatcher
