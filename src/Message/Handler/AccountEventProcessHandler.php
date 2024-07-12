@@ -13,5 +13,7 @@ class AccountEventProcessHandler
     public function __invoke(AccountEventProcessCommand $command): void
     {
         sleep(1);
+
+//        file_put_contents('/app/process_log', "Account ID: {$command->getAccountId()}; Event ID: {$command->getEventId()}\n", FILE_APPEND);
     }
 }
