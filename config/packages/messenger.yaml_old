@@ -27,8 +27,6 @@ framework:
                             binding_keys: [ 'queue4' ]
                         bot_help.account_event_process.command.queue5:
                             binding_keys: [ 'queue5' ]
-                        bot_help.account_event_process.command.queue6:
-                            binding_keys: [ 'queue6' ]
 
         routing:
             # Route your messages to the transports
